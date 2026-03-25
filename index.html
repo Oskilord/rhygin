@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REWIND RECORDS STUDIO | Grabación, Mezcla & Beats</title>
+    <meta name="description" content="Estudio de grabación profesional. Servicios de mezcla, máster, beats personalizados y alquiler de estudio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           CSS VARIABLES & RESET
+        ======================================== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            
+            --neon-purple: #a855f7;
+            --neon-purple-bright: #c084fc;
+            --neon-magenta: #e879f9;
+            --neon-violet: #8b5cf6;
+            --neon-pink: #f472b6;
+            --electric-blue: #60a5fa;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            
+            --glow-purple: 0 0 20px rgba(168, 85, 247, 0.4);
+            --glow-purple-strong: 0 0 30px rgba(168, 85, 247, 0.6), 0 0 60px rgba(168, 85, 247, 0.3);
+            
+            --border-subtle: rgba(168, 85, 247, 0.15);
+            --border-accent: rgba(168, 85, 247, 0.4);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.25s ease;
+            --transition-slow: 0.4s ease;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* ========================================
+           UTILITIES
+        ======================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--neon-purple-bright) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+        
+        /* ========================================
+           BUTTONS
+        ======================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-magenta) 100%);
+            color: white;
+            box-shadow: var(--glow-purple);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-purple-strong);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-accent);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--neon-purple);
+        }
+        
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 0.875rem;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* ========================================
+           HEADER / NAVIGATION
+        ======================================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span {
+            color: var(--neon-purple-bright);
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .nav-link:hover {
+            color: var(--neon-purple-bright);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 6px 0;
+            transition: all var(--transition-fast);
+        }
+        
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            flex: 1;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--border-accent);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--neon-purple-bright);
+            margin-bottom: 24px;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+        
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--neon-purple-bright) 0%, var(--neon-magenta) 50%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-visual {
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .hero-image-container {
+            position: relative;
+            width: 450px;
+            height: 350px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--border-accent);
+            box-shadow: var(--glow-purple), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .hero-image-container::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-magenta), transparent, transparent);
+            border-radius: var(--radius-xl);
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+        
+        .hero-image-container:hover .hero-image {
+            transform: scale(1.03);
+        }
+        
+        .hero-image-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.3) 0%, transparent 60%);
+            filter: blur(40px);
+            z-index: -2;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* ========================================
+           SERVICES SECTION
+        ======================================== */
+        #servicios {
+            background: var(--bg-secondary);
+            position: relative;
+        }
+        
+        #servicios::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-magenta));
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+        
+        .service-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-accent);
+            transform: translateY(-4px);
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-card.selected {
+            border-color: var(--neon-purple);
+            box-shadow: var(--glow-purple), inset 0 0 30px rgba(168, 85, 247, 0.05);
+        }
+        
+        .service-card.selected::before {
+            opacity: 1;
+        }
+        
+        .service-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(232, 121, 249, 0.1));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .service-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .service-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .service-price {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--neon-purple-bright);
+            margin-bottom: 20px;
+        }
+        
+        .service-price.consult {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .service-card .btn {
+            width: 100%;
+        }
+        
+        /* ========================================
+           BOOKING SECTION
+        ======================================== */
+        #reservar {
+            position: relative;
+        }
+        
+        #reservar::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .booking-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+        }
+        
+        .booking-step {
+            margin-bottom: 32px;
+        }
+        
+        .booking-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .selected-service-display {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .selected-service-name {
+            font-weight: 600;
+        }
+        
+        .selected-service-price {
+            color: var(--neon-purple-bright);
+            font-weight: 600;
+        }
+        
+        .no-service-selected {
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        
+        /* Calendar styles */
+        .calendar-container {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-month {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .calendar-nav button {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calendar-nav button:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--neon-purple);
+        }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+        }
+        
+        .calendar-day:hover:not(.disabled):not(.selected) {
+            background: var(--bg-card-hover);
+        }
+        
+        .calendar-day.today {
+            border: 1px solid var(--neon-purple);
+        }
+        
+        .calendar-day.selected {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-magenta));
+            color: white;
+            font-weight: 600;
+            box-shadow: var(--glow-purple);
+        }
+        
+        .calendar-day.disabled {
+            color: var(--text-muted);
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
+        
+        .calendar-day.other-month {
+            color: var(--text-muted);
+            opacity: 0.3;
+        }
+        
+        /* Time slots */
+        .time-slots-container {
+            margin-top: 20px;
+        }
+        
+        .time-slots-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+        }
+        
+        .time-slot {
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 0.9rem;
+        }
+        
+        .time-slot:hover:not(.disabled):not(.selected) {
+            border-color: var(--neon-purple);
+            background: var(--bg-card-hover);
+        }
+        
+        .time-slot.selected {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-magenta));
+            border-color: transparent;
+            color: white;
+            font-weight: 600;
+            box-shadow: var(--glow-purple);
+        }
+        
+        .time-slot.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .time-slots-disabled {
+            color: var(--text-muted);
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+        
+        /* Form inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        textarea.form-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Booking summary */
+        .booking-summary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .summary-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        .summary-items {
+            margin-bottom: 24px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-item-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .summary-item-value {
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .summary-item-value.empty {
+            color: var(--text-muted);
+            font-style: italic;
+            font-weight: 400;
+        }
+        
+        .summary-note {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .summary-note strong {
+            color: var(--neon-purple-bright);
+        }
+        
+        .whatsapp-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            font-size: 1rem;
+            padding: 16px 28px;
+        }
+        
+        .whatsapp-btn:hover {
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        .whatsapp-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* ========================================
+           PROCESS SECTION
+        ======================================== */
+        #proceso {
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+        
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .process-step {
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -20px;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-purple), transparent);
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        .process-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(139, 92, 246, 0.1));
+            border: 2px solid var(--neon-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--neon-purple-bright);
+            margin: 0 auto 24px;
+            box-shadow: var(--glow-purple);
+        }
+        
+        .process-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .process-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand .logo {
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .footer-section h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--neon-purple-bright);
+        }
+        
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-link:hover {
+            color: var(--neon-purple-bright);
+        }
+        
+        .footer-link svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        /* ========================================
+           MOBILE STICKY CTA
+        ======================================== */
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 24px;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-subtle);
+            z-index: 999;
+        }
+        
+        .mobile-sticky-cta .btn {
+            width: 100%;
+        }
+        
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 1024px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking-summary {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 20px;
+                gap: 16px;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            
+            .nav.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-visual {
+                width: 100%;
+                margin-top: 40px;
+            }
+            
+            .hero-image-container {
+                width: 100%;
+                max-width: 400px;
+                height: 280px;
+                margin: 0 auto;
+            }
+            
+            .hero-title {
+                letter-spacing: -1px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+            
+            .booking-form {
+                padding: 24px;
+            }
+            
+            .booking-summary {
+                padding: 24px;
+            }
+            
+            .mobile-sticky-cta {
+                display: block;
+            }
+            
+            body {
+                padding-bottom: 80px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-link {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .service-card {
+                padding: 24px;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* ========================================
+           ANIMATIONS
+        ======================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Validation styles */
+        .form-input.error {
+            border-color: #ef4444;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">REWIND <span>RECORDS</span></a>
+            <nav class="nav" id="nav">
+                <a href="#servicios" class="nav-link">Servicios</a>
+                <a href="#reservar" class="nav-link">Reservar</a>
+                <a href="#proceso" class="nav-link">Cómo funciona</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>Estudio profesional en tu ciudad</span>
+                </div>
+                <h1 class="hero-title">
+                    Tu música merece<br>
+                    <span class="highlight">sonar profesional</span>
+                </h1>
+                <p class="hero-description">
+                    Reserva sesiones de grabación, servicios de mezcla y máster, o solicita beats personalizados. 
+                    Todo en un solo lugar, sin complicaciones.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#reservar" class="btn btn-primary">Reservar ahora</a>
+                    <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-glow"></div>
+                <div class="hero-image-container">
+                    <img src="studio.jpeg" alt="Rewind Records Studio - Espacio de grabación profesional" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section" id="servicios">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <p class="section-subtitle">
+                Elige el servicio que necesitas y lleva tu proyecto al siguiente nivel.
+            </p>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be rendered by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="section" id="reservar">
+        <div class="container">
+            <h2 class="section-title">Reserva tu sesión</h2>
+            <p class="section-subtitle">
+                Selecciona el servicio, fecha y hora que mejor te convengan.
+            </p>
+            <div class="booking-container">
+                <div class="booking-form">
+                    <!-- Step 1: Service -->
+                    <div class="booking-step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Servicio seleccionado</h3>
+                        </div>
+                        <div id="selectedServiceDisplay">
+                            <div class="no-service-selected">
+                                Selecciona un servicio de la sección anterior
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Date & Time -->
+                    <div class="booking-step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Fecha y hora</h3>
+                        </div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <span class="calendar-month" id="calendarMonth"></span>
+                                <div class="calendar-nav">
+                                    <button id="prevMonth" aria-label="Mes anterior">←</button>
+                                    <button id="nextMonth" aria-label="Mes siguiente">→</button>
+                                </div>
+                            </div>
+                            <div class="calendar-weekdays">
+                                <div class="calendar-weekday">Dom</div>
+                                <div class="calendar-weekday">Lun</div>
+                                <div class="calendar-weekday">Mar</div>
+                                <div class="calendar-weekday">Mié</div>
+                                <div class="calendar-weekday">Jue</div>
+                                <div class="calendar-weekday">Vie</div>
+                                <div class="calendar-weekday">Sáb</div>
+                            </div>
+                            <div class="calendar-days" id="calendarDays"></div>
+                        </div>
+                        <div class="time-slots-container">
+                            <div class="time-slots-label">Horarios disponibles:</div>
+                            <div id="timeSlots">
+                                <div class="time-slots-disabled">Selecciona una fecha primero</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Contact Info -->
+                    <div class="booking-step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">Información de contacto</h3>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientName">Nombre *</label>
+                            <input type="text" class="form-input" id="clientName" placeholder="Tu nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientContact">Instagram o WhatsApp *</label>
+                            <input type="text" class="form-input" id="clientContact" placeholder="@tu_usuario o +1234567890" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientNotes">Notas adicionales (opcional)</label>
+                            <textarea class="form-input" id="clientNotes" placeholder="Cuéntanos más sobre tu proyecto..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="booking-summary">
+                    <h3 class="summary-title">Resumen de tu reserva</h3>
+                    <div class="summary-items">
+                        <div class="summary-item">
+                            <span class="summary-item-label">Servicio</span>
+                            <span class="summary-item-value" id="summaryService">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-item-label">Precio</span>
+                            <span class="summary-item-value" id="summaryPrice">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-item-label">Fecha</span>
+                            <span class="summary-item-value" id="summaryDate">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-item-label">Hora</span>
+                            <span class="summary-item-value" id="summaryTime">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-item-label">Nombre</span>
+                            <span class="summary-item-value" id="summaryName">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-item-label">Contacto</span>
+                            <span class="summary-item-value" id="summaryContact">—</span>
+                        </div>
+                    </div>
+                    <div class="summary-note">
+                        <strong>Nota:</strong> Tu reserva será confirmada manualmente después de contactarnos por WhatsApp. Te responderemos lo antes posible.
+                    </div>
+                    <button class="btn btn-primary whatsapp-btn" id="whatsappBtn" disabled>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Enviar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section" id="proceso">
+        <div class="container">
+            <h2 class="section-title">Cómo funciona</h2>
+            <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
+                Reservar tu sesión es simple y rápido.
+            </p>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="process-number">1</div>
+                    <h3 class="process-title">Elige tu servicio</h3>
+                    <p class="process-description">
+                        Explora nuestros servicios de grabación, mezcla, máster o beats y selecciona el que necesitas.
+                    </p>
+                </div>
+                <div class="process-step">
+                    <div class="process-number">2</div>
+                    <h3 class="process-title">Selecciona fecha y hora</h3>
+                    <p class="process-description">
+                        Elige el día y horario que mejor se ajuste a tu agenda con nuestro calendario.
+                    </p>
+                </div>
+                <div class="process-step">
+                    <div class="process-number">3</div>
+                    <h3 class="process-title">Envía tu solicitud</h3>
+                    <p class="process-description">
+                        Confirma tu reserva por WhatsApp y te responderemos para finalizar los detalles.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">REWIND <span>RECORDS</span></a>
+                    <p>Estudio de grabación profesional. Tu sonido, nuestra pasión.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <a href="https://wa.me/TU_NUMERO_AQUI" class="footer-link" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        WhatsApp
+                    </a>
+                    <a href="https://instagram.com/TU_INSTAGRAM" class="footer-link" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        Instagram
+                    </a>
+                </div>
+                <div class="footer-section">
+                    <h4>Ubicación</h4>
+                    <a href="#" class="footer-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        TU_DIRECCION_AQUI
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Rewind Records Studio. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="mobile-sticky-cta">
+        <a href="#reservar" class="btn btn-primary">Reservar ahora</a>
+    </div>
+
+    <script>
+        // ========================================
+        // CONFIGURATION
+        // ========================================
+        const WHATSAPP_NUMBER = "50687144235"; // Replace with your WhatsApp number (e.g., "1234567890")
+        
+        // Services data
+        const services = [
+            {
+                id: 'grabacion',
+                name: 'Grabación de voces',
+                description: 'Sesión de grabación profesional para voces principales, coros o demos.',
+                price: 100,
+                priceDisplay: '$100',
+                icon: '🎤'
+            },
+            {
+                id: 'mezcla',
+                name: 'Mezcla',
+                description: 'Balance, claridad y pegada para que tu tema suene profesional.',
+                price: 100,
+                priceDisplay: '$100',
+                icon: '🎚️'
+            },
+            {
+                id: 'master',
+                name: 'Máster',
+                description: 'Pulido final con volumen, presencia y consistencia.',
+                price: 100,
+                priceDisplay: '$100',
+                icon: '💿'
+            },
+            {
+                id: 'mixmaster',
+                name: 'Mix & Master',
+                description: 'Servicio completo para llevar tu canción al siguiente nivel.',
+                price: 160,
+                priceDisplay: '$160',
+                icon: '🎛️'
+            },
+            {
+                id: 'beat-personalizado',
+                name: 'Beat personalizado',
+                description: 'Instrumental hecha a medida según tu visión y estilo.',
+                price: 120,
+                priceDisplay: '$120',
+                icon: '🎹'
+            },
+            {
+                id: 'beat-stems',
+                name: 'Beat con stems',
+                description: 'Beat completo con pistas separadas para máximo control.',
+                price: 250,
+                priceDisplay: '$250',
+                icon: '🎼'
+            },
+            {
+                id: 'catalogo',
+                name: 'Catálogo de beats',
+                description: 'Escoge entre instrumentales disponibles y encuentra tu sonido.',
+                price: null,
+                priceDisplay: 'Consultar disponibilidad',
+                icon: '📀'
+            },
+            {
+                id: 'alquiler',
+                name: 'Alquiler del estudio',
+                description: 'Reserva el espacio con equipo profesional para tu sesión.',
+                price: 30,
+                priceDisplay: '$30/hora',
+                icon: '🏠'
+            }
+        ];
+        
+        // Time slots configuration
+        const weekdaySlots = ['13:00', '15:00', '17:00', '19:00', '20:00'];
+        const weekendSlots = ['10:00', '12:00', '14:00', '16:00'];
+        
+        // Month names in Spanish
+        const monthNames = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+        
+        // ========================================
+        // STATE
+        // ========================================
+        let state = {
+            selectedService: null,
+            selectedDate: null,
+            selectedTime: null,
+            currentMonth: new Date().getMonth(),
+            currentYear: new Date().getFullYear()
+        };
+        
+        // ========================================
+        // DOM ELEMENTS
+        // ========================================
+        const servicesGrid = document.getElementById('servicesGrid');
+        const selectedServiceDisplay = document.getElementById('selectedServiceDisplay');
+        const calendarMonth = document.getElementById('calendarMonth');
+        const calendarDays = document.getElementById('calendarDays');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        const timeSlotsContainer = document.getElementById('timeSlots');
+        const clientName = document.getElementById('clientName');
+        const clientContact = document.getElementById('clientContact');
+        const clientNotes = document.getElementById('clientNotes');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const nav = document.getElementById('nav');
+        
+        // Summary elements
+        const summaryService = document.getElementById('summaryService');
+        const summaryPrice = document.getElementById('summaryPrice');
+        const summaryDate = document.getElementById('summaryDate');
+        const summaryTime = document.getElementById('summaryTime');
+        const summaryName = document.getElementById('summaryName');
+        const summaryContact = document.getElementById('summaryContact');
+        
+        // ========================================
+        // RENDER FUNCTIONS
+        // ========================================
+        function renderServices() {
+            servicesGrid.innerHTML = services.map(service => `
+                <div class="service-card ${state.selectedService?.id === service.id ? 'selected' : ''}" 
+                     data-service-id="${service.id}">
+                    <div class="service-icon">${service.icon}</div>
+                    <h3 class="service-name">${service.name}</h3>
+                    <p class="service-description">${service.description}</p>
+                    <p class="service-price ${service.price === null ? 'consult' : ''}">${service.priceDisplay}</p>
+                    <button class="btn btn-secondary btn-small">
+                        ${state.selectedService?.id === service.id ? 'Seleccionado' : 'Seleccionar'}
+                    </button>
+                </div>
+            `).join('');
+            
+            // Add click listeners
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const serviceId = card.dataset.serviceId;
+                    selectService(serviceId);
+                });
+            });
+        }
+        
+        function renderSelectedServiceDisplay() {
+            if (state.selectedService) {
+                selectedServiceDisplay.innerHTML = `
+                    <div class="selected-service-display">
+                        <span class="selected-service-name">${state.selectedService.icon} ${state.selectedService.name}</span>
+                        <span class="selected-service-price">${state.selectedService.priceDisplay}</span>
+                    </div>
+                `;
+            } else {
+                selectedServiceDisplay.innerHTML = `
+                    <div class="no-service-selected">
+                        Selecciona un servicio de la sección anterior
+                    </div>
+                `;
+            }
+        }
+        
+        function renderCalendar() {
+            const year = state.currentYear;
+            const month = state.currentMonth;
+            
+            calendarMonth.textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDay = firstDay.getDay();
+            const totalDays = lastDay.getDate();
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            let html = '';
+            
+            // Previous month days
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            for (let i = startDay - 1; i >= 0; i--) {
+                html += `<button class="calendar-day other-month disabled">${prevMonthLastDay - i}</button>`;
+            }
+            
+            // Current month days
+            for (let day = 1; day <= totalDays; day++) {
+                const date = new Date(year, month, day);
+                const isPast = date < today;
+                const isToday = date.getTime() === today.getTime();
+                const isSelected = state.selectedDate && 
+                    state.selectedDate.getDate() === day && 
+                    state.selectedDate.getMonth() === month && 
+                    state.selectedDate.getFullYear() === year;
+                
+                let classes = 'calendar-day';
+                if (isPast) classes += ' disabled';
+                if (isToday) classes += ' today';
+                if (isSelected) classes += ' selected';
+                
+                html += `<button class="${classes}" data-date="${year}-${month + 1}-${day}" ${isPast ? 'disabled' : ''}>${day}</button>`;
+            }
+            
+            // Next month days
+            const remainingCells = 42 - (startDay + totalDays);
+            for (let i = 1; i <= remainingCells; i++) {
+                html += `<button class="calendar-day other-month disabled">${i}</button>`;
+            }
+            
+            calendarDays.innerHTML = html;
+            
+            // Add click listeners
+            document.querySelectorAll('.calendar-day:not(.disabled)').forEach(dayBtn => {
+                dayBtn.addEventListener('click', () => {
+                    const dateStr = dayBtn.dataset.date;
+                    if (dateStr) {
+                        const [y, m, d] = dateStr.split('-').map(Number);
+                        selectDate(new Date(y, m - 1, d));
+                    }
+                });
+            });
+        }
+        
+        function renderTimeSlots() {
+            if (!state.selectedDate) {
+                timeSlotsContainer.innerHTML = `
+                    <div class="time-slots-disabled">Selecciona una fecha primero</div>
+                `;
+                return;
+            }
+            
+            const dayOfWeek = state.selectedDate.getDay();
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            const slots = isWeekend ? weekendSlots : weekdaySlots;
+            
+            timeSlotsContainer.innerHTML = `
+                <div class="time-slots">
+                    ${slots.map(slot => `
+                        <button class="time-slot ${state.selectedTime === slot ? 'selected' : ''}" 
+                                data-time="${slot}">
+                            ${slot}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Add click listeners
+            document.querySelectorAll('.time-slot').forEach(slotBtn => {
+                slotBtn.addEventListener('click', () => {
+                    selectTime(slotBtn.dataset.time);
+                });
+            });
+        }
+        
+        function updateSummary() {
+            summaryService.textContent = state.selectedService?.name || '—';
+            summaryService.classList.toggle('empty', !state.selectedService);
+            
+            summaryPrice.textContent = state.selectedService?.priceDisplay || '—';
+            summaryPrice.classList.toggle('empty', !state.selectedService);
+            
+            if (state.selectedDate) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                summaryDate.textContent = state.selectedDate.toLocaleDateString('es-ES', options);
+            } else {
+                summaryDate.textContent = '—';
+            }
+            summaryDate.classList.toggle('empty', !state.selectedDate);
+            
+            summaryTime.textContent = state.selectedTime || '—';
+            summaryTime.classList.toggle('empty', !state.selectedTime);
+            
+            summaryName.textContent = clientName.value || '—';
+            summaryName.classList.toggle('empty', !clientName.value);
+            
+            summaryContact.textContent = clientContact.value || '—';
+            summaryContact.classList.toggle('empty', !clientContact.value);
+            
+            // Update WhatsApp button state
+            const isValid = state.selectedService && state.selectedDate && state.selectedTime && 
+                           clientName.value.trim() && clientContact.value.trim();
+            whatsappBtn.disabled = !isValid;
+        }
+        
+        // ========================================
+        // ACTION FUNCTIONS
+        // ========================================
+        function selectService(serviceId) {
+            const service = services.find(s => s.id === serviceId);
+            state.selectedService = service;
+            renderServices();
+            renderSelectedServiceDisplay();
+            updateSummary();
+            
+            // Smooth scroll to booking section
+            document.getElementById('reservar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function selectDate(date) {
+            state.selectedDate = date;
+            state.selectedTime = null; // Reset time when date changes
+            renderCalendar();
+            renderTimeSlots();
+            updateSummary();
+        }
+        
+        function selectTime(time) {
+            state.selectedTime = time;
+            renderTimeSlots();
+            updateSummary();
+        }
+        
+        function generateWhatsAppMessage() {
+            const name = clientName.value.trim();
+            const contact = clientContact.value.trim();
+            const notes = clientNotes.value.trim();
+            const service = state.selectedService.name;
+            const price = state.selectedService.priceDisplay;
+            
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = state.selectedDate.toLocaleDateString('es-ES', dateOptions);
+            const timeStr = state.selectedTime;
+            
+            let message = `Hola, quiero reservar un servicio en Rewind Records Studio.
+
+*Nombre:* ${name}
+*Contacto:* ${contact}
+*Servicio:* ${service}
+*Precio:* ${price}
+*Fecha:* ${dateStr}
+*Hora:* ${timeStr}`;
+
+            if (notes) {
+                message += `
+*Notas:* ${notes}`;
+            }
+            
+            message += `
+
+Quedo pendiente de confirmación. ¡Gracias!`;
+            
+            return message;
+        }
+        
+        function sendWhatsApp() {
+            if (whatsappBtn.disabled) return;
+            
+            const message = generateWhatsAppMessage();
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            
+            window.open(url, '_blank');
+        }
+        
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        prevMonthBtn.addEventListener('click', () => {
+            state.currentMonth--;
+            if (state.currentMonth < 0) {
+                state.currentMonth = 11;
+                state.currentYear--;
+            }
+            renderCalendar();
+        });
+        
+        nextMonthBtn.addEventListener('click', () => {
+            state.currentMonth++;
+            if (state.currentMonth > 11) {
+                state.currentMonth = 0;
+                state.currentYear++;
+            }
+            renderCalendar();
+        });
+        
+        clientName.addEventListener('input', updateSummary);
+        clientContact.addEventListener('input', updateSummary);
+        
+        whatsappBtn.addEventListener('click', sendWhatsApp);
+        
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        function init() {
+            renderServices();
+            renderSelectedServiceDisplay();
+            renderCalendar();
+            renderTimeSlots();
+            updateSummary();
+        }
+        
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // Initialize immediately if DOM is already ready
+        if (document.readyState !== 'loading') {
+            init();
+        }
+    </script>
+</body>
+</html>
